@@ -1,15 +1,76 @@
 package servlets;
 
+import enitys.Role;
+import enitys.User;
+import enitys.UserRoles;
+import facades.RoleFacade;
+import facades.UserFacade;
+import facades.UserRolesFacade;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import tools.PasswordProtector;
 
-@WebServlet(name = "LoginServlet", urlPatterns = {"/LoginServlet"})
+@WebServlet(name = "LoginServlet", urlPatterns = {
+    "/login",
+    "/logout",
+    "/registration",
+})
 public class LoginServlet extends HttpServlet {
+    @EJB private UserFacade userFacade;
+    @EJB private RoleFacade roleFacade;
+    @EJB private UserRolesFacade userRolesFacade;
+    
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        if (userFacade.count() > 0) {
+            return;
+        }
+        
+        User user = new User();
+        user.setFirstName("Dmitrii");
+        user.setSureName("Kreivald");
+        user.setPhone("+37253064458");
+        user.setLogin("admin");
+        PasswordProtector pp = new PasswordProtector();
+        String salt = pp.getSalt();
+        user.setSalt(salt);
+        String password = pp.getProtectedPassword("12345", salt);
+        user.setPassword(password);
+        user.setWallet(1000);
+        userFacade.create(user);
+        
+        Role role = new Role();
+        role.setRoleName("USER");
+        roleFacade.create(role);
+        
+        UserRoles ur = new UserRoles();
+        ur.setRole(role);
+        ur.setUser(user);
+        userRolesFacade.create(ur);
+        role = new Role();
+        role.setRoleName("MANAGER");
+        roleFacade.create(role);
+        
+        ur = new UserRoles();
+        ur.setRole(role);
+        ur.setUser(user);
+        userRolesFacade.create(ur);
+        role = new Role();
+        role.setRoleName("ADMINISTRATOR");
+        roleFacade.create(role);
+        
+        ur = new UserRoles();
+        ur.setRole(role);
+        ur.setUser(user);
+        userRolesFacade.create(ur);
+    }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
