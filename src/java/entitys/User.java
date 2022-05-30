@@ -1,5 +1,5 @@
 
-package enitys;
+package entitys;
 
 import java.io.Serializable;
 import java.util.List;

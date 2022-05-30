@@ -1,7 +1,7 @@
 
 package facades;
 
-import enitys.Role;
+import entitys.Role;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

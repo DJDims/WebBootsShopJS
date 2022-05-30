@@ -1,4 +1,7 @@
+"use strict";
+
 import {viewModule} from './ViewModule.js';
+import {loginModule} from './LoginModule.js';
 
 const menuChangeRole = document.getElementById("menu_change_role");
 menuChangeRole.addEventListener('click', e => {
@@ -50,6 +53,7 @@ const menuLogout = document.getElementById("menu_logout");
 menuLogout.addEventListener('click', e => {
     e.preventDefault();
     activeBtnMenu(null);
+    loginModule.logOut();
 });
 const infoElement = document.getElementById("info");
 
@@ -117,10 +121,10 @@ function checkMenu() {
             menuAddMoney.classList.add("d-none");
         }
         if(menuLogin.classList.contains('d-none')){
-            menuLogin.classList.remove("d-none");
+            menuLogin.classList.add("d-none");
         }
         if(!menuLogout.classList.contains('d-none')){
-            menuLogout.classList.add("d-none");
+            menuLogout.classList.remove("d-none");
         }
         return;
     }
@@ -141,43 +145,43 @@ function checkMenu() {
             menuAddMoney.classList.add("d-none");
         }
         if(menuLogin.classList.contains('d-none')){
-            menuLogin.classList.remove("d-none");
+            menuLogin.classList.add("d-none");
         }
         if(!menuLogout.classList.contains('d-none')){
-            menuLogout.classList.add("d-none");
+            menuLogout.classList.remove("d-none");
         }
         return;
     }
     if(role.roleName === 'ADMINISTRATOR'){
-        if(!menuChangeRole.classList.contains('d-none')){
-            menuChangeRole.classList.add("d-none");
+        if(menuChangeRole.classList.contains('d-none')){
+            menuChangeRole.classList.remove("d-none");
         }
-        if(!menuStatistic.classList.contains('d-none')){
-            menuStatistic.classList.add("d-none");
+        if(menuStatistic.classList.contains('d-none')){
+            menuStatistic.classList.remove("d-none");
         }
-        if(!menuAddProdut.classList.contains('d-none')){
-            menuAddProdut.classList.add("d-none");
+        if(menuAddProdut.classList.contains('d-none')){
+            menuAddProdut.classList.remove("d-none");
         }
-        if(!menuStore.classList.contains('d-none')){
-            menuStore.classList.add("d-none");
+        if(menuStore.classList.contains('d-none')){
+            menuStore.classList.remove("d-none");
         }
-        if(!menuChangeData.classList.contains('d-none')){
-            menuChangeData.classList.add("d-none");
+        if(menuChangeData.classList.contains('d-none')){
+            menuChangeData.classList.remove("d-none");
         }
-        if(!menuMyPurchases.classList.contains('d-none')){
-            menuMyPurchases.classList.add("d-none");
+        if(menuMyPurchases.classList.contains('d-none')){
+            menuMyPurchases.classList.remove("d-none");
         }
-        if(!menuAddMoney.classList.contains('d-none')){
-            menuAddMoney.classList.add("d-none");
+        if(menuAddMoney.classList.contains('d-none')){
+            menuAddMoney.classList.remove("d-none");
         }
-        if(!menuUsersList.classList.contains('d-none')){
-            menuUsersList.classList.add("d-none");
+        if(menuUsersList.classList.contains('d-none')){
+            menuUsersList.classList.remove("d-none");
         }
-        if(menuLogin.classList.contains('d-none')){
-            menuLogin.classList.remove("d-none");
+        if(!menuLogin.classList.contains('d-none')){
+            menuLogin.classList.add("d-none");
         }
-        if(!menuLogout.classList.contains('d-none')){
-            menuLogout.classList.add("d-none");
+        if(menuLogout.classList.contains('d-none')){
+            menuLogout.classList.remove("d-none");
         }
         return;
     }

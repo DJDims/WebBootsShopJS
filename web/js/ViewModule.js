@@ -1,3 +1,5 @@
+import {loginModule} from "./LoginModule.js"
+
 class ViewModule {
     showLoginForm(){
         const content = document.getElementById('content');

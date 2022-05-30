@@ -1,7 +1,7 @@
 
 package facades;
 
-import enitys.History;
+import entitys.History;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

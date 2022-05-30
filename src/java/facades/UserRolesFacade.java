@@ -1,9 +1,9 @@
 
 package facades;
 
-import enitys.Role;
-import enitys.User;
-import enitys.UserRoles;
+import entitys.Role;
+import entitys.User;
+import entitys.UserRoles;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;

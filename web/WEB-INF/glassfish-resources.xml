@@ -10,5 +10,5 @@
         <property name="URL" value="jdbc:mysql://localhost:3306/jptv20_webbootsshopjs?zeroDateTimeBehavior=convertToNull"/>
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>
     </jdbc-connection-pool>
-    <jdbc-resource enabled="true" jndi-name="java:app/jdbc_webbootsshopjs" object-type="user" pool-name="mysql_jptv20_webbootsshopjs_jptv20_webbootsshopjsPool"/>
+    <jdbc-resource enabled="true" jndi-name="java:app/JDBC_jptv20_webbootsshopjsDS" object-type="user" pool-name="mysql_jptv20_webbootsshopjs_jptv20_webbootsshopjsPool"/>
 </resources>

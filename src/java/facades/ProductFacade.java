@@ -1,7 +1,7 @@
 
 package facades;
 
-import enitys.Product;
+import entitys.Product;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
