@@ -35,7 +35,7 @@ class LoginModule {
                 });
     }
     
-    logOut(){
+    logout(){
         let promiseLogout = fetch('logout', {
             method: 'GET',
             headers: {
@@ -44,18 +44,18 @@ class LoginModule {
             credentials: 'include'
         });
         promiseLogout.then(response => response.json()) 
-                .then(response => {
-                    document.getElementById('info').innerHTML = response.info;
-                    if(!response.auth){
-                        if(sessionStorage.getItem('user')){
-                            sessionStorage.removeItem('user');
-                        }
-                        if(sessionStorage.getItem('role')){
-                            sessionStorage.removeItem('role');
-                        }
-                       checkMenu();
+           .then(response => {
+                document.getElementById('info').innerHTML = response.info;
+                if(!response.auth){
+                    if(sessionStorage.getItem('user')){
+                        sessionStorage.removeItem('user');
                     }
-                });
+                    if(sessionStorage.getItem('role')){
+                        sessionStorage.removeItem('role');
+                    }
+                   checkMenu();
+                }
+            });
     }
 }
 

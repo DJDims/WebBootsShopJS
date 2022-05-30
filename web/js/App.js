@@ -3,45 +3,58 @@
 import {viewModule} from './ViewModule.js';
 import {loginModule} from './LoginModule.js';
 
+const menuBootsShop = document.getElementById("menu_boots_shop");
+menuBootsShop.addEventListener('click', e => {
+    e.preventDefault();
+    deactiveMenu(menuBootsShop);
+});
 const menuChangeRole = document.getElementById("menu_change_role");
 menuChangeRole.addEventListener('click', e => {
     e.preventDefault();
     activeBtnMenu(menuChangeRole);
+    viewModule.showChangeRoleForm();
 });
 const menuStatistic = document.getElementById("menu_statistic");
 menuStatistic.addEventListener('click', e => {
     e.preventDefault();
     activeBtnMenu(menuStatistic);
+    viewModule.showStatistic();
 });
 const menuAddProdut = document.getElementById("menu_add_product");
 menuAddProdut.addEventListener('click', e => {
     e.preventDefault();
     activeBtnMenu(menuAddProdut);
+    viewModule.showAddProductFrom();
 });
 const menuStore = document.getElementById("menu_store");
 menuStore.addEventListener('click', e => {
     e.preventDefault();
     activeBtnMenu(menuStore);
+    viewModule.showStore();
 });
 const menuChangeData = document.getElementById("menu_change_data");
 menuChangeData.addEventListener('click', e => {
     e.preventDefault();
     activeBtnMenu(menuChangeData);
+    viewModule.showChangeDataFrom();
 });
 const menuMyPurchases = document.getElementById("menu_my_purchases");
 menuMyPurchases.addEventListener('click', e => {
     e.preventDefault();
     activeBtnMenu(menuMyPurchases);
+    viewModule.showMyPurchases();
 });
 const menuAddMoney = document.getElementById("menu_add_money");
 menuAddMoney.addEventListener('click', e => {
     e.preventDefault();
     activeBtnMenu(menuAddMoney);
+    viewModule.showAddMoneyFrom();
 });
 const menuUsersList = document.getElementById("menu_users_list");
 menuUsersList.addEventListener('click', e => {
     e.preventDefault();
     activeBtnMenu(menuUsersList);
+    viewModule.showUsersList();
 });
 const menuLogin = document.getElementById("menu_login");
 menuLogin.addEventListener('click', e => {
@@ -53,7 +66,7 @@ const menuLogout = document.getElementById("menu_logout");
 menuLogout.addEventListener('click', e => {
     e.preventDefault();
     activeBtnMenu(null);
-    loginModule.logOut();
+    loginModule.logout();
 });
 const infoElement = document.getElementById("info");
 
