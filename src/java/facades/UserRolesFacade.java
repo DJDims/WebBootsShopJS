@@ -12,6 +12,8 @@ import javax.persistence.PersistenceContext;
 
 @Stateless
 public class UserRolesFacade extends AbstractFacade<UserRoles> {
+
+    @EJB private UserRolesFacade userRolesFacade;
     @EJB private RoleFacade roleFacade;
     
     @PersistenceContext(unitName = "WebBootsShopJSPU")

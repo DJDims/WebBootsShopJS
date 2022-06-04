@@ -1,4 +1,8 @@
 import {loginModule} from "./LoginModule.js";
+import {rolesModule} from "./RolesModule.js";
+import {incomeModule} from "./IncomeModule.js";
+import {productModule} from "./ProductModule.js";
+import {userModule} from "./UserModule.js";
 
 class ViewModule {
     showLoginForm(){
@@ -29,7 +33,7 @@ class ViewModule {
         const content = document.getElementById('content');
         content.innerHTML = `
             <div class="d-flex justify-content-center">
-                <div class="card text-white border-primary mb-3" style="max-width: 20rem;">
+                <div class="card text-white border-primary mb-3" style="width: 30rem;">
                     <div class="card-header">Назначение роли</div>
                     <div class="card-body">
                         <div class="form-group">
@@ -48,9 +52,15 @@ class ViewModule {
                     </div>
                 </div>
             </div>`;
+        document.getElementById("btn_submit").addEventListener('click', (e)=>{
+            e.preventDefault();
+            rolesModule.changeRole();
+        });
+        rolesModule.insertListUsers();
+        rolesModule.insertListRoles();
     };
     
-    showAddProductFrom(){
+    showAddProductForm(){
         const content = document.getElementById('content');
         content.innerHTML = `
             <div class="w-100 d-flex justify-content-center">
@@ -85,14 +95,70 @@ class ViewModule {
                     <input class="btn btn-primary mb-2" type="submit" value="Добавить товар" id="btn_submit">
                 </div>
             </div>`;
+        
+        document.getElementById("btn_submit").addEventListener('click', (e)=>{
+            e.preventDefault();
+            productModule.createNewProduct();
+            this.showAddProductForm();
+        });
     };
     
-    showChangeDataFrom(){
+    showChangeDataForm(){
         const content = document.getElementById('content');
-        content.innerHTML = ``;
+        content.innerHTML = `
+            <div class="container-fluid">
+                <div class="w-100 d-flex justify-content-evenly">
+                    <div class="card border-primary mb-3" style="max-width: 20rem;">
+                        <div class="card-header">Личные данные</div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label class="col-form-label mt-1">Имя</label>
+                                <input type="text" class="form-control" id="firstName" value="">
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label mt-1">Фамилия</label>
+                                <input type="text" class="form-control" id="sureName" value="">
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label mt-1">Телефон</label>
+                                <input type="text" class="form-control" id="phone" value="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card border-primary mb-3" style="max-width: 20rem;">
+                        <div class="card-header">Данные аккаунта</div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label class="col-form-label mt-1">Логин</label>
+                                <input type="text" class="form-control" id="login" value="">
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label mt-1">Старый пароль</label>
+                                <input type="password" class="form-control" id="oldPassword">
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label mt-1">Новый пароль</label>
+                                <input type="password" class="form-control" id="newPassword1">
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label mt-1">Подтвердите новый пароль</label>
+                                <input type="password" class="form-control" id="newPassword2">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <input class="btn btn-success mt-1" id="submit" value="Подтвердить изменения">
+                </div>
+            </div>`;
+        userModule.showUser();
+        document.getElementById("submit").addEventListener('click', (e) => {
+            e.preventDefault();
+            userModule.editUser();
+        });
     };
     
-    showAddMoneyFrom(){
+    showAddMoneyForm(){
         const content = document.getElementById('content');
         content.innerHTML = `
             <div class="d-flex justify-content-center">
@@ -132,6 +198,7 @@ class ViewModule {
                     <p class="card-text" id="p_all_income"></p>
                 </div>
             </div>`;
+        incomeModule.showIncome();
     };
     
     showStore(){
@@ -141,7 +208,27 @@ class ViewModule {
     
     showMyPurchases(){
         const content = document.getElementById('content');
-        content.innerHTML = ``;
+        content.innerHTML = `
+        <div class="album">
+            <div class="container">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                    <c:forEach var="history" items="">
+                        <div class="col">
+                            <div class="card border-primary mb-3" style="max-width: 20rem;">
+                                <div class="card-body">
+                                    <h4 class="card-title"></h4>
+                                    <p class="card-text"></p>
+                                    <p class="card-text">Размер:</p>
+                                    <p class="card-text">Цена:€</p>
+                                    <p class="card-text">Дата покупки:</p>
+                                </div>
+                            </div>
+                        </div>   
+                    </c:forEach>
+                </div>
+            </div>
+        </div>
+        `;
     };
     
     showUsersList(){

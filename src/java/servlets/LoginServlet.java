@@ -54,7 +54,7 @@ public class LoginServlet extends HttpServlet {
         userFacade.create(user);
         
         Role role = new Role();
-        role.setRoleName("USER");
+        role.setRoleName("CUSTOMER");
         roleFacade.create(role);
         
         UserRoles ur = new UserRoles();
@@ -62,7 +62,7 @@ public class LoginServlet extends HttpServlet {
         ur.setUser(user);
         userRolesFacade.create(ur);
         role = new Role();
-        role.setRoleName("MANAGER");
+        role.setRoleName("SELLER");
         roleFacade.create(role);
         
         ur = new UserRoles();

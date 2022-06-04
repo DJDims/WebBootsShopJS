@@ -24,7 +24,7 @@ const menuAddProdut = document.getElementById("menu_add_product");
 menuAddProdut.addEventListener('click', e => {
     e.preventDefault();
     activeBtnMenu(menuAddProdut);
-    viewModule.showAddProductFrom();
+    viewModule.showAddProductForm();
 });
 const menuStore = document.getElementById("menu_store");
 menuStore.addEventListener('click', e => {
@@ -36,7 +36,7 @@ const menuChangeData = document.getElementById("menu_change_data");
 menuChangeData.addEventListener('click', e => {
     e.preventDefault();
     activeBtnMenu(menuChangeData);
-    viewModule.showChangeDataFrom();
+    viewModule.showChangeDataForm();
 });
 const menuMyPurchases = document.getElementById("menu_my_purchases");
 menuMyPurchases.addEventListener('click', e => {
@@ -48,7 +48,7 @@ const menuAddMoney = document.getElementById("menu_add_money");
 menuAddMoney.addEventListener('click', e => {
     e.preventDefault();
     activeBtnMenu(menuAddMoney);
-    viewModule.showAddMoneyFrom();
+    viewModule.showAddMoneyForm();
 });
 const menuUsersList = document.getElementById("menu_users_list");
 menuUsersList.addEventListener('click', e => {
