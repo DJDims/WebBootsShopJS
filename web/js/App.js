@@ -50,12 +50,12 @@ menuAddMoney.addEventListener('click', e => {
     activeBtnMenu(menuAddMoney);
     viewModule.showAddMoneyForm();
 });
-const menuUsersList = document.getElementById("menu_users_list");
-menuUsersList.addEventListener('click', e => {
-    e.preventDefault();
-    activeBtnMenu(menuUsersList);
-    viewModule.showUsersList();
-});
+//const menuUsersList = document.getElementById("menu_users_list");
+//menuUsersList.addEventListener('click', e => {
+//    e.preventDefault();
+//    activeBtnMenu(menuUsersList);
+//    viewModule.showUsersList();
+//});
 const menuLogin = document.getElementById("menu_login");
 menuLogin.addEventListener('click', e => {
     e.preventDefault();
@@ -108,9 +108,9 @@ function checkMenu() {
         if(!menuAddMoney.classList.contains('d-none')){
             menuAddMoney.classList.add("d-none");
         }
-        if(!menuUsersList.classList.contains('d-none')){
-            menuUsersList.classList.add("d-none");
-        }
+//        if(!menuUsersList.classList.contains('d-none')){
+//            menuUsersList.classList.add("d-none");
+//        }
         if(menuLogin.classList.contains('d-none')){
             menuLogin.classList.remove("d-none");
         }
@@ -120,47 +120,47 @@ function checkMenu() {
         return;
     }
     role = JSON.parse(sessionStorage.getItem('role'));
-    if(role.roleName === 'USER'){
-        if(!menuStore.classList.contains('d-none')){
-            menuStore.classList.add("d-none");
+    if(role.roleName === 'CUSTOMER'){
+        if(menuStore.classList.contains('d-none')){
+            menuStore.classList.remove("d-none");
         }
-        if(!menuChangeData.classList.contains('d-none')){
-            menuChangeData.classList.add("d-none");
+        if(menuChangeData.classList.contains('d-none')){
+            menuChangeData.classList.remove("d-none");
         }
-        if(!menuMyPurchases.classList.contains('d-none')){
-            menuMyPurchases.classList.add("d-none");
+        if(menuMyPurchases.classList.contains('d-none')){
+            menuMyPurchases.classList.remove("d-none");
         }
-        if(!menuAddMoney.classList.contains('d-none')){
-            menuAddMoney.classList.add("d-none");
+        if(menuAddMoney.classList.contains('d-none')){
+            menuAddMoney.classList.remove("d-none");
         }
-        if(menuLogin.classList.contains('d-none')){
+        if(!menuLogin.classList.contains('d-none')){
             menuLogin.classList.add("d-none");
         }
-        if(!menuLogout.classList.contains('d-none')){
+        if(menuLogout.classList.contains('d-none')){
             menuLogout.classList.remove("d-none");
         }
         return;
     }
-    if(role.roleName === 'MANAGER'){
-        if(!menuAddProdut.classList.contains('d-none')){
-            menuAddProdut.classList.add("d-none");
+    if(role.roleName === 'SELLER'){
+        if(menuAddProdut.classList.contains('d-none')){
+            menuAddProdut.classList.remove("d-none");
         }
-        if(!menuStore.classList.contains('d-none')){
-            menuStore.classList.add("d-none");
+        if(menuStore.classList.contains('d-none')){
+            menuStore.classList.remove("d-none");
         }
-        if(!menuChangeData.classList.contains('d-none')){
-            menuChangeData.classList.add("d-none");
+        if(menuChangeData.classList.contains('d-none')){
+            menuChangeData.classList.remove("d-none");
         }
-        if(!menuMyPurchases.classList.contains('d-none')){
-            menuMyPurchases.classList.add("d-none");
+        if(menuMyPurchases.classList.contains('d-none')){
+            menuMyPurchases.classList.remove("d-none");
         }
-        if(!menuAddMoney.classList.contains('d-none')){
-            menuAddMoney.classList.add("d-none");
+        if(menuAddMoney.classList.contains('d-none')){
+            menuAddMoney.classList.remove("d-none");
         }
-        if(menuLogin.classList.contains('d-none')){
+        if(!menuLogin.classList.contains('d-none')){
             menuLogin.classList.add("d-none");
         }
-        if(!menuLogout.classList.contains('d-none')){
+        if(menuLogout.classList.contains('d-none')){
             menuLogout.classList.remove("d-none");
         }
         return;
@@ -187,9 +187,9 @@ function checkMenu() {
         if(menuAddMoney.classList.contains('d-none')){
             menuAddMoney.classList.remove("d-none");
         }
-        if(menuUsersList.classList.contains('d-none')){
-            menuUsersList.classList.remove("d-none");
-        }
+//        if(menuUsersList.classList.contains('d-none')){
+//            menuUsersList.classList.remove("d-none");
+//        }
         if(!menuLogin.classList.contains('d-none')){
             menuLogin.classList.add("d-none");
         }

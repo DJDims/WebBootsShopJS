@@ -1,5 +1,3 @@
-
-
 class UserModule {
     showUser(){
         const firstNameInp = document.getElementById("firstName");
@@ -50,6 +48,36 @@ class UserModule {
         }).catch(error => {
             document.getElementById("info").innerHTML = "Ошибка сервера:" + error;
         });
+    }
+    
+    addMoney(){
+        const money = document.getElementById("moneyInput").value;
+        const addMoneyData = {
+            "money": money,
+            "login": JSON.parse(sessionStorage.getItem("user")).login
+        };
+        
+        let promise = fetch("addMoney",{
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json;charset:utf8'
+            },
+            credentials: 'include',
+            body: JSON.stringify(addMoneyData)
+        });
+        
+        promise.then(response => response.json()).then(response => {
+            if (response.status){
+                document.getElementById("info").innerHTML = "Деньги успешно начислены";
+                document.getElementById("moneyInput").value = "";
+            } 
+        }).catch(error => {
+            document.getElementById("info").innerHTML = "Ошибка сервера:" + error;
+        });
+    }
+    
+    buyProduct(id){
+        
     }
 }
 

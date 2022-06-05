@@ -8,26 +8,79 @@ class ViewModule {
     showLoginForm(){
         const content = document.getElementById('content');
         content.innerHTML = 
-               `<div class="card border-secondary mb-3 mx-auto" style="max-width: 30rem;">
-                    <h3 class="card-header w-100 text-center ">Авторизация</h3>
-                    <div class="card-body">
-                      <div class="form-group">
-                        <label for="login" class="form-label mt-4">Логин</label>
-                        <input type="text" class="form-control" id="login" placeholder="Login">
+               `<h2 class="my-2 w-100 d-flex justify-content-center">Введите логин и пароль</h2>
+                <div class="w-100 d-flex justify-content-center">
+                      <div class="card border-0 px-3" style="width: 20em;">
+                        <div class="form-group">
+                            <label for="login" class="form-label mt-2">Логин</label>
+                            <input type="text" class="form-control" name="login" id="login"">
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="form-label mt-2">Пароль</label>
+                            <input type="password" class="form-control" name="password" id="password">
+                        </div>
+                        <input class="btn btn-primary mt-2" type="submit" value="Войти" id='button_login'>
+                        <input class="btn btn-primary mt-2" type="submit" value="Зарегистрироваться" id='button_register'>
                       </div>
-                      <div class="form-group">
-                        <label for="password" class="form-label mt-4">Password</label>
-                        <input type="password" class="form-control" id="password" placeholder="Password">
-                      </div>
-                      <button id='button_login' type="submit" class="btn btn-primary my-3">Войти</button>
-                    </div>
                 </div>`;
         const buttonLogin = document.getElementById("button_login");
         buttonLogin.addEventListener('click', (e)=>{
             e.preventDefault();
             loginModule.sendCredential();
         });
+        const buttonRegister = document.getElementById("button_register");
+        buttonRegister.addEventListener('click', (e)=>{
+            e.preventDefault();
+            this.showRegisterForm();
+        });
     };
+    
+    showRegisterForm(){
+        const content = document.getElementById('content');
+        content.innerHTML = 
+               `<div class="w-100 d-flex justify-content-center">
+                    <div class="card border-0 px-3 mb-2" style="width: 70em;">
+                        <div class="row gx-5">
+                            <div class="form-group col">
+                                <label class="form-label mt-3">Имя</label>
+                                <input type="text" class="form-control" id="firstName" placeholder="Введите имя">
+                            </div>
+                            <div class="form-group col">
+                                <label class="form-label mt-3">Фамилия</label>
+                                <input type="text" class="form-control" id="sureName" placeholder="Введите фамилию">
+                            </div>
+                            <div class="form-group col">
+                                <label class="form-label mt-3">Телефон</label>
+                                <input type="text" class="form-control" id="phone" placeholder="Введите телефон">
+                            </div>
+                        </div>
+                        <div class="row gx-5">
+                            <div class="form-group col">
+                                <label class="form-label mt-2">Логин</label>
+                                <input type="text" class="form-control mb-3" id="login" placeholder="Введите логин">
+                            </div>
+                            <div class="form-group col">
+                                <label class="form-label mt-2">Пароль</label>
+                                <input type="password" class="form-control mb-3" id="password1" placeholder="Введите пароль">
+                            </div>
+                            <div class="form-group col">
+                                <label class="form-label mt-2">Подтверждение пароля</label>
+                                <input type="password" class="form-control mb-3" id="password2" placeholder="Повторите пароль">
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="w-100 d-flex justify-content-center">
+                            <button type="submit" id="submit" class="btn btn-primary">Зарегистрироваться</button>
+                        </div>
+                    </div>
+            </div>`;
+        const registerButton = document.getElementById("submit").addEventListener('click', (e)=>{
+            e.preventDefault();
+            loginModule.register();
+            
+        });
+    }
     
     showChangeRoleForm(){
         const content = document.getElementById('content');
@@ -170,7 +223,7 @@ class ViewModule {
                             <div class="form-group">
                                 <div class="input-group mb-3">
                                     <span class="input-group-text">€</span>
-                                    <input type="text" min="5" max="500" step="5" class="form-control" id="money">
+                                    <input type="text" min="5" max="1000" step="5" class="form-control" id="moneyInput">
                                 </div>
                             </div>
                         </div>
@@ -178,6 +231,11 @@ class ViewModule {
                     </div>
                 </div>
             </div>`;
+        
+        document.getElementById("btn_submit").addEventListener("click", (e) => {
+           e.preventDefault();
+           userModule.addMoney();
+        });
     };
     
     showStatistic(){
@@ -204,6 +262,7 @@ class ViewModule {
     showStore(){
         const content = document.getElementById('content');
         content.innerHTML = ``;
+        productModule.showListProducts();
     };
     
     showMyPurchases(){
@@ -211,20 +270,7 @@ class ViewModule {
         content.innerHTML = `
         <div class="album">
             <div class="container">
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                    <c:forEach var="history" items="">
-                        <div class="col">
-                            <div class="card border-primary mb-3" style="max-width: 20rem;">
-                                <div class="card-body">
-                                    <h4 class="card-title"></h4>
-                                    <p class="card-text"></p>
-                                    <p class="card-text">Размер:</p>
-                                    <p class="card-text">Цена:€</p>
-                                    <p class="card-text">Дата покупки:</p>
-                                </div>
-                            </div>
-                        </div>   
-                    </c:forEach>
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="insertHere">
                 </div>
             </div>
         </div>
@@ -234,6 +280,38 @@ class ViewModule {
     showUsersList(){
         const content = document.getElementById('content');
         content.innerHTML = ``;
+    };
+    
+    showBuyForm(product){
+        let wallet = JSON.parse(sessionStorage.getItem("user")).wallet;
+        const content = document.getElementById('content');
+        content.innerHTML = `
+            <div class="d-flex justify-content-center">
+                <div>
+                <div class="card border-primary mb-3" style="max-width: 20rem;">
+                    <div class="card-header">Ваш счет</div>
+                    <div class="card-body">
+                        <p class="card-text">У вас на счету ${wallet}€</p>
+                        <a href="showAddMoney"><p class="text-muted">Поплнить счет</p></a>
+                    </div>
+                </div>
+                <div class="card border-primary mb-3" style="max-width: 20rem;">
+                    <div class="card-header">Информация о товаре</div>
+                    <div class="card-body">
+                        <h4 class="card-title">${product.title}</h4>
+                        <p class="card-text">${product.description}</p>
+                        <p class="card-text">Размер: ${product.size}</p>
+                        <p class="card-text">Цена: ${product.price}€</p>
+                    </div>
+                </div>
+                <button type="sumbit" id="submit" class="btn btn-success">Купить</button>
+                </div>
+            </div>`;
+        document.getElementById("submit").addEventListener('click', (e)=>{
+            e.preventDefault();
+            userModule.buyProduct(product.id);
+            this.showStore();
+        });
     };
     
 }

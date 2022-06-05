@@ -5,6 +5,7 @@ import entitys.History;
 import entitys.Product;
 import entitys.Role;
 import entitys.User;
+import entitys.UserRoles;
 import facades.HistoryFacade;
 import facades.ProductFacade;
 import facades.RoleFacade;
@@ -22,7 +23,6 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonReader;
-import javax.json.JsonValue;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,6 +32,7 @@ import javax.servlet.http.HttpSession;
 import jsontools.ProductJsonBuilder;
 import jsontools.RoleJsonBuilder;
 import jsontools.UserJsonBuilder;
+import tools.PasswordProtector;
 
 @WebServlet(name = "MainServlet", urlPatterns = {
     "/changeRole",
@@ -40,7 +41,9 @@ import jsontools.UserJsonBuilder;
     "/showIncomes",
     "/createNewProduct",
     "/getListProducts",
-    "/editUser"
+    "/editUser",
+    "/addMoney",
+    "/register"
 })
 public class MainServlet extends HttpServlet {
     @EJB private UserFacade userFacade;
@@ -184,6 +187,60 @@ public class MainServlet extends HttpServlet {
                 job.add("status", true);
                 job.add("info", "Данные пользователя изменены");
                 job.add("newUserData", ujb.getUserJsonObject(editedUser));
+                try (PrintWriter out = response.getWriter()) {
+                    out.println(job.build().toString());
+                }
+                break;
+                
+            case "/addMoney":
+                jsonReader = Json.createReader(request.getReader());
+                jsonObject = jsonReader.readObject();
+                String money = jsonObject.getString("money", "");
+                String loginToAdd = jsonObject.getString("login", "");
+                
+                User userToAdd = userFacade.findByLogin(loginToAdd);
+                
+                userToAdd.setWallet(userToAdd.getWallet() + Double.parseDouble(money));
+                userFacade.edit(userToAdd);
+                
+                job.add("status", true);
+                job.add("info", "Деньги добавлены");
+                try (PrintWriter out = response.getWriter()) {
+                    out.println(job.build().toString());
+                }
+                break;
+                
+            case "/register":
+                jsonReader = Json.createReader(request.getReader());
+                jsonObject = jsonReader.readObject();
+                String newLogin = jsonObject.getString("login", "");
+                String newPassword = jsonObject.getString("password", "");
+                String newFirstName = jsonObject.getString("firstName", "");
+                String newSureName = jsonObject.getString("sureName", "");
+                String newPhone = jsonObject.getString("phone", "");
+                
+                User newUser = new User();
+                newUser.setFirstName(newFirstName);
+                newUser.setSureName(newSureName);
+                newUser.setLogin(newLogin);
+                newUser.setPhone(newPhone);
+                PasswordProtector pp = new PasswordProtector();
+                String salt = pp.getSalt();
+                newUser.setSalt(salt);
+                String password = pp.getProtectedPassword(newPassword, salt);
+                newUser.setPassword(password);
+                
+                userFacade.create(newUser);
+                
+                Role newRole = roleFacade.findRoleByRoleName("CUSTOMER");
+                UserRoles newUserRole = new UserRoles();
+                newUserRole.setUser(newUser);
+                newUserRole.setRole(newRole);
+                
+                userRolesFacade.create(newUserRole);
+                
+                job.add("status", true);
+                job.add("info", "Новый пользователь зарегистрирован");
                 try (PrintWriter out = response.getWriter()) {
                     out.println(job.build().toString());
                 }

@@ -1,4 +1,5 @@
 import {checkMenu} from "./App.js";
+import {viewModule} from "./ViewModule.js";
 
 class LoginModule {
     sendCredential(){
@@ -52,6 +53,41 @@ class LoginModule {
                 }
                checkMenu();
             }
+        });
+    }
+    
+    register(){
+        let login = document.getElementById("login").value;
+        let password = document.getElementById("password1").value;
+        let confirmPassword = document.getElementById("password2").value;
+        let firstName = document.getElementById("firstName").value;
+        let sureName = document.getElementById("sureName").value;
+        let phone = document.getElementById("phone").value;
+        
+        if (password !== confirmPassword) {
+            document.getElementById("info").innerHTML = "Пароли не совпадают";
+//            break;
+        }
+        
+        const newUserData = {
+            "login": login,
+            "password": password,
+            "firstName": firstName,
+            "sureName": sureName,
+            "phone": phone
+        };
+        let promise = fetch('register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset:utf8'
+            },
+            credentials: 'include',
+            body: JSON.stringify(newUserData)
+        });
+        
+        promise.then(response => response.json()).then(response => {
+            document.getElementById('info').innerHTML = response.info;
+            viewModule.showLoginForm();
         });
     }
 }

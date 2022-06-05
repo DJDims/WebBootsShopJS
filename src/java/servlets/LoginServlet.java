@@ -26,7 +26,6 @@ import tools.PasswordProtector;
 @WebServlet(name = "LoginServlet", urlPatterns = {
     "/login",
     "/logout",
-    "/registration",
 })
 public class LoginServlet extends HttpServlet {
     @EJB private UserFacade userFacade;
@@ -115,7 +114,7 @@ public class LoginServlet extends HttpServlet {
                 session = request.getSession(true);
                 session.setAttribute("authUser", authUser);
                 job.add("info", "Вы вошли как "+authUser.getLogin())
-                   .add("auth",true)
+                   .add("auth", true)
                    .add("user", new UserJsonBuilder().getUserJsonObject(authUser))
                    .add("role", new RoleJsonBuilder().getRoleJsonObject(role));
                 try(PrintWriter out = response.getWriter()) {
@@ -124,17 +123,17 @@ public class LoginServlet extends HttpServlet {
                 break;
             
             case "/logout":
-                session = request.getSession(false);
-                if (session != null) {
+                 session = request.getSession(false);
+                if(session != null){
                     session.invalidate();
-                    request.setAttribute("info", "Вы вышли");
                 }
-                request.getRequestDispatcher("/listProducts").forward(request, response);
+                job.add("info", "Вы вышли")
+                   .add("status", false);
+                try (PrintWriter out = response.getWriter()) {
+                    out.println(job.build().toString());
+                }
                 break;
                 
-            case "/registration":
-                
-                break;
         }
     }
 
