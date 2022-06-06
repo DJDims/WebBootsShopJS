@@ -15,7 +15,7 @@ import javax.persistence.OneToOne;
 public class User implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String login;
     private String password;
@@ -24,7 +24,7 @@ public class User implements Serializable {
     private String phone;
     private double wallet;
     private String salt;
-    @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToOne(orphanRemoval = true)
     private List<Product> listProducts;
 
     public User() {

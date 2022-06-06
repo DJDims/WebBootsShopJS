@@ -13,7 +13,7 @@ import javax.persistence.OneToOne;
 public class UserRoles implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToOne
     private User user;

@@ -14,8 +14,10 @@ import facades.UserRolesFacade;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import javax.ejb.EJB;
@@ -43,7 +45,8 @@ import tools.PasswordProtector;
     "/getListProducts",
     "/editUser",
     "/addMoney",
-    "/register"
+    "/register",
+    "/buyProduct"
 })
 public class MainServlet extends HttpServlet {
     @EJB private UserFacade userFacade;
@@ -245,7 +248,46 @@ public class MainServlet extends HttpServlet {
                     out.println(job.build().toString());
                 }
                 break;
+                
+            case "/buyProduct":
+                jsonReader = Json.createReader(request.getReader());
+                jsonObject = jsonReader.readObject();
+                String productId = jsonObject.getString("productId", "");
+                String customerId = jsonObject.getString("userId", "");
+                
+                User buyer = userFacade.findById(Long.parseLong(customerId));
+                Product productToBuy = productFacade.findById(Long.parseLong(productId));
+                if (buyer.getWallet() < productToBuy.getPrice()) {
+                    job.add("status", false);
+                    job.add("info", "Недостаточно денег");
+                    try (PrintWriter out = response.getWriter()) {
+                        out.println(job.build().toString());
+                    }
+                    break;
+                }
+                History history = new History();
+                history.setProduct(productToBuy);
+                history.setUser(buyer);
+                history.setPurchaseDate(localdateToDate(LocalDate.now()));
+                
+                historyFacade.create(history);
+                
+                buyer.setWallet(buyer.getWallet() - productToBuy.getPrice());
+                userFacade.edit(buyer);
+                
+                productToBuy.setQuantity(productToBuy.getQuantity()-1);
+                productFacade.edit(productToBuy);
+                
+                job.add("status", true);
+                job.add("info", "Продукт куплен");
+                try (PrintWriter out = response.getWriter()) {
+                    out.println(job.build().toString());
+                }
+                break;
         }
+    }
+    private Date localdateToDate(LocalDate dateToConvert){
+        return Date.from(dateToConvert.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

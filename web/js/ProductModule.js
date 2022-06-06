@@ -62,6 +62,9 @@ class ProductModule {
                     </table>`;
                 document.getElementById("content").innerHTML = tablePsesset;
                 for (var i = 0; i < response.products.length; i++) {
+                    if (response.products[i].quanity === 0){
+                        continue;
+                    }
                     this.createProductRow(response.products[i]);
                 }
             }

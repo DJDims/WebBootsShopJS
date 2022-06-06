@@ -16,8 +16,8 @@ class IncomeModule{
         promise.then(responseIncomes => responseIncomes.json()).then(responseIncomes =>{
             if (responseIncomes.status) {
                 monthP.innerHTML = responseIncomes.month;
-                monthIncomeP.innerHTML = responseIncomes.monthIncome;
-                allIncomeP.innerHTML = responseIncomes.allIncome;
+                monthIncomeP.innerText = responseIncomes.monthIncome;
+                allIncomeP.innerText = responseIncomes.allIncome;
             }
         }).catch(error=>{
             document.getElementById('info').innerHTML = 'Ошибка сервера showIncomes: '+error;

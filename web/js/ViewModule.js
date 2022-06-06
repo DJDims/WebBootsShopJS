@@ -266,15 +266,8 @@ class ViewModule {
     };
     
     showMyPurchases(){
-        const content = document.getElementById('content');
-        content.innerHTML = `
-        <div class="album">
-            <div class="container">
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" id="insertHere">
-                </div>
-            </div>
-        </div>
-        `;
+        const content = document.getElementById('info');
+        content.innerHTML = "В разработке...";
     };
     
     showUsersList(){
@@ -292,7 +285,7 @@ class ViewModule {
                     <div class="card-header">Ваш счет</div>
                     <div class="card-body">
                         <p class="card-text">У вас на счету ${wallet}€</p>
-                        <a href="showAddMoney"><p class="text-muted">Поплнить счет</p></a>
+                        <a id="showAddMoney"><p class="text-muted">Поплнить счет</p></a>
                     </div>
                 </div>
                 <div class="card border-primary mb-3" style="max-width: 20rem;">
@@ -311,6 +304,11 @@ class ViewModule {
             e.preventDefault();
             userModule.buyProduct(product.id);
             this.showStore();
+        });
+        
+        document.getElementById("showAddMoney").addEventListener('click', (e)=>{
+            e.preventDefault();
+            this.showAddMoneyForm();
         });
     };
     

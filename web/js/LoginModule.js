@@ -52,6 +52,7 @@ class LoginModule {
                     sessionStorage.removeItem('role');
                 }
                checkMenu();
+               viewModule.showLoginForm();
             }
         });
     }
