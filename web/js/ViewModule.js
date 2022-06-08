@@ -145,6 +145,10 @@ class ViewModule {
                         <label class="form-label mt-2 mx-2">Количество</label>
                         <input type="number" min="1" class="form-control mb-4" id="quantity">
                     </div>
+                    <div class="form-group">
+                        <label for="formFile" class="form-label mt-4">Картинка обуви</label>
+                        <input class="form-control" type="file" id="image">
+                    </div>
                     <input class="btn btn-primary mb-2" type="submit" value="Добавить товар" id="btn_submit">
                 </div>
             </div>`;

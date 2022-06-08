@@ -8,12 +8,15 @@ class ProductModule {
         const size = document.getElementById("size").value;
         const price = document.getElementById("price").value;
         const count = document.getElementById("quantity").value;
+        const picture = document.getElementById("image").value;
+        
         const productFields = {
             "title": title,
             "description": description,
             "size": size,
             "price": price,
-            "count": count
+            "count": count,
+            "picture": picture
             
         };
         let promiseCreateNewProduct = fetch("createNewProduct", {

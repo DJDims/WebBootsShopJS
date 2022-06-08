@@ -11,15 +11,21 @@ import facades.ProductFacade;
 import facades.RoleFacade;
 import facades.UserFacade;
 import facades.UserRolesFacade;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import javax.ejb.EJB;
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -31,6 +37,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 import jsontools.ProductJsonBuilder;
 import jsontools.RoleJsonBuilder;
 import jsontools.UserJsonBuilder;
@@ -54,6 +61,8 @@ public class MainServlet extends HttpServlet {
     @EJB private UserRolesFacade userRolesFacade;
     @EJB private HistoryFacade historyFacade;
     @EJB private ProductFacade productFacade;
+    
+    private final String uploadDir = "D:\\UploadDir\\JPTV20BootsShop";
     
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -141,6 +150,9 @@ public class MainServlet extends HttpServlet {
                 String size = jsonObject.getString("size", "");
                 String price = jsonObject.getString("price", "");
                 String count = jsonObject.getString("count", "");
+//                String picture = 
+                
+                
                 
                 Product product = new Product();
                 product.setTitle(title);
@@ -148,6 +160,14 @@ public class MainServlet extends HttpServlet {
                 product.setSize(Integer.parseInt(size));
                 product.setPrice(Integer.parseInt(price));
                 product.setQuantity(Integer.parseInt(count));
+                
+                String coverFileName;
+                try {
+                    product.setPicture(getPathToCover(request.getPart("cover")));
+                } catch (IOException | ServletException e) {
+                    coverFileName = request.getParameter("coverFileName");
+                    product.setPicture(getPathToCover(coverFileName));
+                }
                 
                 productFacade.create(product);
                 
@@ -286,8 +306,55 @@ public class MainServlet extends HttpServlet {
                 break;
         }
     }
+    
     private Date localdateToDate(LocalDate dateToConvert){
         return Date.from(dateToConvert.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    }
+    
+    private String getPathToCover(Part part) throws IOException {
+        String pathToCover = uploadDir + File.separator + getFileName(part);
+        File file = new File(pathToCover);
+        file.mkdirs();
+        try(InputStream fileContent = part.getInputStream()){
+            Files.copy(fileContent, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        }
+        return pathToCover;
+    }
+    private String getPathToCover(String coverFileName){
+        File uploadDirFolder = new File(uploadDir);
+        File[] listOfFiles = uploadDirFolder.listFiles();
+        for (int i = 0; i < listOfFiles.length; i++) {
+            if(listOfFiles[i].isFile()){
+                if(coverFileName.equals(listOfFiles[i].getName())){
+                    return listOfFiles[i].getPath();
+                }
+            }
+        }
+        return "";
+    }
+    private String[] getCoversFileName(){
+        Set<String> setPathToCover = new HashSet<>();
+        File uploadDirFolder = new File(uploadDir);
+        File[] listOfFiles = uploadDirFolder.listFiles();
+        if (listOfFiles == null) return null;
+        for (int i = 0; i < listOfFiles.length; i++) {
+            if(listOfFiles[i].isFile()){
+                setPathToCover.add(listOfFiles[i].getName());
+            }
+        }
+        return setPathToCover.toArray(new String[setPathToCover.size()]);
+    }
+    private String getFileName(Part part){
+        final String partHeader = part.getHeader("content-disposition");
+        for (String content : part.getHeader("content-disposition").split(";")){
+            if(content.trim().startsWith("filename")){
+                return content
+                        .substring(content.indexOf('=')+1)
+                        .trim()
+                        .replace("\"",""); 
+            }
+        }
+        return null;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

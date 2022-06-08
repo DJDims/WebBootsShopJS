@@ -19,6 +19,7 @@ public class Product implements Serializable {
     private int size;
     private double price;
     private int quantity;
+    private String picture;
 
     public Product() {
     }
@@ -71,20 +72,29 @@ public class Product implements Serializable {
         this.quantity = quantity;
     }
 
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
     @Override
     public String toString() {
-        return "Product{" + "id=" + id + ", title=" + title + ", description=" + description + ", size=" + size + ", price=" + price + ", quantity=" + quantity + '}';
+        return "Product{" + "id=" + id + ", title=" + title + ", description=" + description + ", size=" + size + ", price=" + price + ", quantity=" + quantity + ", picture=" + picture + '}';
     }
 
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 61 * hash + Objects.hashCode(this.id);
-        hash = 61 * hash + Objects.hashCode(this.title);
-        hash = 61 * hash + Objects.hashCode(this.description);
-        hash = 61 * hash + this.size;
-        hash = 61 * hash + (int) (Double.doubleToLongBits(this.price) ^ (Double.doubleToLongBits(this.price) >>> 32));
-        hash = 61 * hash + this.quantity;
+        hash = 59 * hash + Objects.hashCode(this.id);
+        hash = 59 * hash + Objects.hashCode(this.title);
+        hash = 59 * hash + Objects.hashCode(this.description);
+        hash = 59 * hash + this.size;
+        hash = 59 * hash + (int) (Double.doubleToLongBits(this.price) ^ (Double.doubleToLongBits(this.price) >>> 32));
+        hash = 59 * hash + this.quantity;
+        hash = 59 * hash + Objects.hashCode(this.picture);
         return hash;
     }
 
@@ -115,10 +125,14 @@ public class Product implements Serializable {
         if (!Objects.equals(this.description, other.description)) {
             return false;
         }
+        if (!Objects.equals(this.picture, other.picture)) {
+            return false;
+        }
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
     }
+    
     
 }

@@ -22,8 +22,9 @@ public class ProductJsonBuilder {
         job.add("title", product.getTitle());
         job.add("description", product.getDescription());
         job.add("size", product.getSize());
-		job.add("price", product.getPrice());
-		job.add("quanity", product.getQuantity());
+        job.add("price", product.getPrice());
+        job.add("quanity", product.getQuantity());
+        job.add("picture", product.getPicture());
         return job.build();
     }
 }
