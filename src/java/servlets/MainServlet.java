@@ -32,6 +32,7 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonReader;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -55,6 +56,7 @@ import tools.PasswordProtector;
     "/register",
     "/buyProduct"
 })
+@MultipartConfig
 public class MainServlet extends HttpServlet {
     @EJB private UserFacade userFacade;
     @EJB private RoleFacade roleFacade;
@@ -143,16 +145,13 @@ public class MainServlet extends HttpServlet {
                 break;
                 
             case "/createNewProduct":
-                jsonReader = Json.createReader(request.getReader());
-                jsonObject = jsonReader.readObject();
-                String title = jsonObject.getString("title", "");
-                String description = jsonObject.getString("description", "");
-                String size = jsonObject.getString("size", "");
-                String price = jsonObject.getString("price", "");
-                String count = jsonObject.getString("count", "");
-//                String picture = 
-                
-                
+//                jsonReader = Json.createReader(request.getReader());
+//                jsonObject = jsonReader.readObject();
+                String title = request.getParameter("name");
+                String description = request.getParameter("description");
+                String size = request.getParameter("size");
+                String price = request.getParameter("price");
+                String count = request.getParameter("quantity");
                 
                 Product product = new Product();
                 product.setTitle(title);
@@ -163,7 +162,7 @@ public class MainServlet extends HttpServlet {
                 
                 String coverFileName;
                 try {
-                    product.setPicture(getPathToCover(request.getPart("cover")));
+                    product.setPicture(getPathToCover(request.getPart("picture")));
                 } catch (IOException | ServletException e) {
                     coverFileName = request.getParameter("coverFileName");
                     product.setPicture(getPathToCover(coverFileName));

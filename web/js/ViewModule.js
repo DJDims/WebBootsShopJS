@@ -33,6 +33,12 @@ class ViewModule {
             e.preventDefault();
             this.showRegisterForm();
         });
+        document.getElementById('password').addEventListener('keypress',(e)=>{
+            if(e.key === 'Enter'){
+                e.preventDefault();
+                loginModule.sendCredential();
+            }
+        });
     };
     
     showRegisterForm(){
@@ -116,47 +122,53 @@ class ViewModule {
     showAddProductForm(){
         const content = document.getElementById('content');
         content.innerHTML = `
+        <form id="formProduct">
             <div class="w-100 d-flex justify-content-center">
                 <div class="card border-0 mb-3 px-3" style="width: 40em;">
                     <h2 class="my-3 w-100 d-flex justify-content-center">Добавить обувь</h2>
-                    <!--<a href="showUploadFile" class="my-1 w-100 d-flex justify-content-center">Загрузить изображение</a>-->
                     <div class="form-group">
-                        <label class="form-label mt-2 mx-2">Название</label>
-                        <input type="text" class="form-control" id="name">
+                        <label for="name" class="form-label mt-2 mx-2">Название</label>
+                        <input type="text" class="form-control" id="name" name="name">
                     </div>
                     <div class="form-group">
-                        <label class="form-label mt-2 mx-2">Описание</label>
-                        <textarea class="form-control" id="description" rows="3""></textarea>
+                        <label for="description" class="form-label mt-2 mx-2">Описание</label>
+                        <textarea class="form-control" name="description" id="description" rows="3"></textarea>
                     </div>
                     <div class="form-group">
-                        <label class="form-label mt-2 mx-2">Размер</label>
-                        <input type="number" min="31" max="48" class="form-control" id="size">
+                        <label for="size" class="form-label mt-2 mx-2">Размер</label>
+                        <input type="number" min="31" max="48" class="form-control" id="size" name="size">
                     </div>
                     <div class="form-group">
-                        <label class="form-label mt-2 mx-2">Цена</label>
+                        <label for="price" class="form-label mt-2 mx-2">Цена</label>
                         <div class="form-group">
                             <div class="input-group">
                                 <span class="input-group-text">€</span>
-                                <input type="number" min="1.00" step="0.01" id="price" class="form-control">
+                                <input type="number" min="1.00" step="0.01" id="price" name="price" class="form-control">
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="form-label mt-2 mx-2">Количество</label>
-                        <input type="number" min="1" class="form-control mb-4" id="quantity">
+                        <label for="quantity" class="form-label mt-2 mx-2">Количество</label>
+                        <input type="number" min="1" class="form-control mb-4" name="quantity" id="quantity">
                     </div>
-                    <div class="form-group">
-                        <label for="formFile" class="form-label mt-4">Картинка обуви</label>
-                        <input class="form-control" type="file" id="image">
+                   <div class="form-group">
+                        <label for="picture" class="form-label mt-4">Картинка обуви</label>
+                        <input class="form-control" type="file" id="picture" name="picture">
                     </div>
                     <input class="btn btn-primary mb-2" type="submit" value="Добавить товар" id="btn_submit">
                 </div>
-            </div>`;
+            </div>
+        </form>`;
         
-        document.getElementById("btn_submit").addEventListener('click', (e)=>{
+//        document.getElementById("btn_submit").addEventListener('click', (e)=>{
+//            e.preventDefault();
+////            productModule.createNewProduct();
+////            this.showAddProductForm();
+//        });
+        document.getElementById("formProduct").addEventListener('submit', (e)=>{
             e.preventDefault();
             productModule.createNewProduct();
-            this.showAddProductForm();
+           
         });
     };
     
@@ -296,6 +308,7 @@ class ViewModule {
                     <div class="card-header">Информация о товаре</div>
                     <div class="card-body">
                         <h4 class="card-title">${product.title}</h4>
+                        <img src='insertFile/${product.picture}' class="card-img-top" style="width: 20rem; height: 25rem">
                         <p class="card-text">${product.description}</p>
                         <p class="card-text">Размер: ${product.size}</p>
                         <p class="card-text">Цена: ${product.price}€</p>

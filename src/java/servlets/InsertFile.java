@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import static org.apache.jasper.Constants.DEFAULT_BUFFER_SIZE;
 
-@WebServlet(name = "InsertFile", urlPatterns = {"/InsertFile/*"})
+@WebServlet(name = "InsertFile", urlPatterns = {"/insertFile/*"})
 public class InsertFile extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)

@@ -7,6 +7,7 @@ const menuBootsShop = document.getElementById("menu_boots_shop");
 menuBootsShop.addEventListener('click', e => {
     e.preventDefault();
     deactiveMenu(menuBootsShop);
+    viewModule.showStore();
 });
 const menuChangeRole = document.getElementById("menu_change_role");
 menuChangeRole.addEventListener('click', e => {

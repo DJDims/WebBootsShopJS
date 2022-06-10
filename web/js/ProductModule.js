@@ -3,29 +3,14 @@ import {viewModule} from "./ViewModule.js";
 
 class ProductModule {
     createNewProduct(){
-        const title = document.getElementById("name").value;
-        const description = document.getElementById("description").value;
-        const size = document.getElementById("size").value;
-        const price = document.getElementById("price").value;
-        const count = document.getElementById("quantity").value;
-        const picture = document.getElementById("image").value;
+//        const formProduct = document.getElementById('formProduct');
+//
+//        const formData = new FormData(formProduct);
         
-        const productFields = {
-            "title": title,
-            "description": description,
-            "size": size,
-            "price": price,
-            "count": count,
-            "picture": picture
-            
-        };
         let promiseCreateNewProduct = fetch("createNewProduct", {
             method: "POST",
-            headers: {
-                'Content-Type': 'application/json;charset:utf8'
-            },
             credentials: 'include',
-            body: JSON.stringify(productFields)
+            body: new FormData(document.getElementById('formProduct'))
         });
         
         promiseCreateNewProduct.then(response => response.json()).then(response => {
